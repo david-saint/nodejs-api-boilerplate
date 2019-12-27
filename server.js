@@ -1,6 +1,7 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+import app from './app';
 
-const app = require('./app');
+dotenv.config();
 
 // set the port for the server
 app.set('port', process.env.PORT || 7777);

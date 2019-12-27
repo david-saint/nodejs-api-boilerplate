@@ -47,4 +47,4 @@ if (app.get('env') === 'development') {
 app.use(productionErrors);
 
 // done! we export it so we can start the server in server.js
-module.exports = app;
+export default app;
