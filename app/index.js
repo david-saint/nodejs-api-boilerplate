@@ -1,6 +1,10 @@
-const express = require('express');
-const routes = require('./routes');
-const errorHandler = require('./routes/handlers/errorHandler');
+import express from 'express';
+import routes from './routes';
+import {
+  notFound,
+  productionErrors,
+  developmentErrors,
+} from './routes/__init__/handlers';
 
 const app = express();
 
@@ -31,16 +35,16 @@ app.use((req, res, next) => {
 app.use('/', routes);
 
 // If that above routes didnt work, we 404 them and forward to error handler
-app.use(errorHandler.notFound);
+app.use(notFound);
 
 // Otherwise this was a really bad error we didn't expect! Shoot eh
 if (app.get('env') === 'development') {
   /* Development Error Handler - Prints stack trace */
-  app.use(errorHandler.developmentErrors);
+  app.use(developmentErrors);
 }
 
 // production error handler
-app.use(errorHandler.productionErrors);
+app.use(productionErrors);
 
 // done! we export it so we can start the server in server.js
 module.exports = app;

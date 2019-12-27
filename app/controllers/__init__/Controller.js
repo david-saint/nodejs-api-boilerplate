@@ -7,10 +7,18 @@ export default class Controller {
     }
   }
 
+  /**
+   * Handles data validation.
+   * @param  {Object} options.body
+   * @param  {mixed} validator
+   * @return {[type]}              [description]
+   */
   async validate({ body }, validator = null) {
     if (validator === null) return true;
+
     const { value, error } = await JOI.validate(body, validator);
     if (error) throw new Error(error);
+
     return value;
   }
 }

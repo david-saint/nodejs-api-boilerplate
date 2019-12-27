@@ -1,11 +1,12 @@
-const express = require('express');
-const { catchErrors } = require('./handlers/errorHandler');
-const { register } = require('../controllers/RegistrationController');
+import { Router } from 'express';
 
-const router = express.Router();
+import { catchErrors } from './__init__/handlers';
+import RegistrationController from '../controllers/RegistrationController';
+
+const router = Router();
 
 // Liat of accepted routes
 router.get('/', (req, res) => res.send('hello'));
 
 // USSD for registeriing farmers and what nots
-router.post('/register', catchErrors(register));
+router.post('/register', catchErrors(RegistrationController.register));
