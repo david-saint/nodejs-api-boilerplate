@@ -9,6 +9,6 @@ const router = Router();
 router.get('/', (req, res) => res.json({ data: { message: '/api/v1' } }));
 
 // USSD for registeriing farmers and what nots
-router.post('/register', resolve(RegistrationController, 'registers'));
+router.post('/register', resolve(RegistrationController, 'register'));
 
 export default router;
