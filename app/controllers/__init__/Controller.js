@@ -3,7 +3,7 @@ import JOI from 'joi';
 export default class Controller {
   constructor() {
     if (this.constructor === Controller) {
-      throw new TypeError('Abstract class "Widget" cannot be instantiated directly.');
+      throw new TypeError('Abstract class "Controller" cannot be instantiated directly.');
     }
   }
 

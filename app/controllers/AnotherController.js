@@ -1,6 +1,6 @@
 import Controller from './__init__/Controller';
 
-class RegistrationController extends Controller {
+class AnotherController extends Controller {
   /**
    * The method that handles the registration ish
    * @param  {Request} req
@@ -9,9 +9,11 @@ class RegistrationController extends Controller {
    */
   register(req, res) {
     // validate the request
+    console.log(this);
     this.validate(req);
-    return res.json({ data: { text: req.body.text } });
+    console.log(req);
+    return res.json({ data: { text: req.text } });
   }
 }
 
-export default RegistrationController;
+export default AnotherController;

@@ -30,10 +30,6 @@ export const developmentErrors = (err, req, res, next) => {
   };
   res.status(err.status || 500);
   res.format({
-    // Based on the `Accept` http header
-    'text/html': () => {
-      res.render('error', errorDetails);
-    }, // Form Submit, Reload the page
     'application/json': () => res.json(errorDetails), // Ajax call, send JSON back
   });
 };
