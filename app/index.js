@@ -1,3 +1,4 @@
+import logger from 'morgan';
 import express from 'express';
 import routes from './routes';
 import {
@@ -7,6 +8,9 @@ import {
 } from './routes/__init__/handlers';
 
 const app = express();
+
+// Log requests to the console
+app.use(logger('dev'));
 
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(express.urlencoded({ extended: true }));
