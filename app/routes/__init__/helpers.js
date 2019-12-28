@@ -5,5 +5,13 @@ export const has = Object.prototype.hasOwnProperty;
 export function resolve(Controller, method) {
   const instance = new Controller();
 
+  if (!instance[method]) {
+    return (req, res, next) => Promise.resolve().then(() => {
+      throw new ReferenceError(
+        `Call to undefined [Method] - '${method}' on [Controller] - '${Controller.name}'`,
+      );
+    }).catch(next);
+  }
+
   return instance[method].bind(instance);
 }

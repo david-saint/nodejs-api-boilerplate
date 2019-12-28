@@ -1,7 +1,7 @@
 {
-  "name": "digitalacres-ussd_api",
+  "name": "nodejs-api-boilerplate",
   "version": "0.0.1",
-  "description": "The Nodejs API handling the USSD operations of Digital Acres.",
+  "description": "Simple full-fledged api development boilerplate for node and express.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
