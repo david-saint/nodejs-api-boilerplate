@@ -1,14 +1,17 @@
 import { Router } from 'express';
 
 import { resolve } from '../../__init__/helpers';
-import RegistrationController from '../../../controllers/RegistrationController';
+import TodoController from '../../../controllers/TodoController';
 
 const router = Router();
 
 // Liat of accepted routes
 router.get('/', (req, res) => res.json({ data: { message: '/api/v1' } }));
 
-// USSD for registeriing farmers and what nots
-router.post('/register', resolve(RegistrationController, 'register'));
+// Route for listing all the todo lists
+router.get('/todos', resolve(TodoController, 'index'));
+
+// Route for creating a todo list
+router.post('/todos/create', resolve(TodoController, 'create'));
 
 export default router;

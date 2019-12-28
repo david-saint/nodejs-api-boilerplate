@@ -19,8 +19,8 @@ fs
   .readdirSync(__dirname)
   .filter(file => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
   .forEach((file) => {
-    const model = sequelize.import(path.join(__dirname, file));
-    db[model.name] = model;
+    const model = require(path.join(__dirname, file)).default; // eslint-disable-line
+    db[model.name] = model.init(sequelize, Sequelize);
   });
 
 Object.keys(db).forEach((modelName) => {
@@ -32,4 +32,4 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db;

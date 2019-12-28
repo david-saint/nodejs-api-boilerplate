@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   development: {
     host: process.env.DEV_DB_HOST,
