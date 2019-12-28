@@ -1,4 +1,4 @@
-# Essential-kit
+# Photon
 [![Made in Nigeria](https://img.shields.io/badge/made%20in-nigeria-008751.svg?style=flat-square)](https://github.com/acekyd/made-in-nigeria)
 
 Aren't you tired of remembering all the essential packages you need just to craft a simple application, well this is for you.
