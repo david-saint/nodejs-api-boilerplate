@@ -6,7 +6,7 @@ Aren't you tired of remembering all the essential packages you need just to craf
 ## What you get
 * Proper Route Structure
 * Plug and Play Validations
-* Mongoose ORM (MongoDB Available for now) 💾
+* Sequelize ORM (MariaDB by default) 💾
 * Authentication JWT 🔐
 * REST resources (Like laravel's JSON resources)
 * CSRF Protection 🔑
