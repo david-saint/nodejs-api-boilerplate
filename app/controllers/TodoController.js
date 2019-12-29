@@ -1,5 +1,6 @@
 import models from '../models';
 import Controller from './__init__/Controller';
+import { create as createValidator } from './validators/Todo';
 
 class TodoController extends Controller {
   /**
@@ -10,6 +11,7 @@ class TodoController extends Controller {
    */
   create(req, res) {
     // validate the request
+    this.validate(req, createValidator());
     // then create a new todo
     return models.Todo
       .create({

@@ -13,5 +13,7 @@ export function resolve(Controller, method) {
     }).catch(next);
   }
 
-  return instance[method].bind(instance);
+  return (req, res, next) => Promise.resolve()
+    .then(() => instance[method](req, res, next).bind(instance))
+    .catch(next);
 }

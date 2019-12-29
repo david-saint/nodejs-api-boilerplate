@@ -1,5 +1,3 @@
-import JOI from 'joi';
-
 export default class Controller {
   constructor() {
     if (this.constructor === Controller) {
@@ -13,11 +11,11 @@ export default class Controller {
    * @param  {mixed} validator
    * @return {[type]}              [description]
    */
-  async validate({ body }, validator = null) {
+  validate(request, validator = null) {
     if (validator === null) return true;
 
-    const { value, error } = await JOI.validate(body, validator);
-    if (error) throw new Error(error);
+    const { value, error } = validator.validate(request);
+    if (error) { error.status = 400; throw error; }
 
     return value;
   }
