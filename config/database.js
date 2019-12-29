@@ -8,7 +8,7 @@ module.exports = {
     password: process.env.DEV_DB_PASSWORD,
     database: process.env.DEV_DB_DATABASE,
     dialect: process.env.DEV_DB_CONNECTION,
-    operatorsAliases: false,
+    operatorsAliases: '0',
   },
   test: {
     host: process.env.TEST_DB_HOST,
@@ -17,7 +17,7 @@ module.exports = {
     password: process.env.TEST_DB_PASSWORD,
     database: process.env.TEST_DB_DATABASE,
     dialect: process.env.TEST_DB_CONNECTION,
-    operatorsAliases: false,
+    operatorsAliases: '0',
   },
   production: {
     host: process.env.PROD_DB_HOST,
@@ -26,6 +26,6 @@ module.exports = {
     password: process.env.PROD_DB_PASSWORD,
     database: process.env.PROD_DB_DATABASE,
     dialect: process.env.PROD_DB_CONNECTION,
-    operatorsAliases: false,
+    operatorsAliases: '0',
   },
 };
