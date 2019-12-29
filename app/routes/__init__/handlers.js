@@ -24,9 +24,11 @@ export const notFound = (req, res, next) => {
 export const developmentErrors = (err, req, res, next) => {
   err.stack = err.stack || '';
   const errorDetails = {
+    type: err.name,
     message: err.message,
     status: err.status || 500,
     stackHighlighted: err.stack.replace(/[a-z_-\d]+.js:\d+:\d+/gi, '<mark>$&</mark>'),
+    details: err.details,
   };
   res.status(err.status || 500);
   res.format({
