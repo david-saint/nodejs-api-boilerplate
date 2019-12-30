@@ -13,8 +13,8 @@ function create() {
     }),
     params: JOI.object({
       todoId: JOI.number().required(),
-    }),
-  });
+    }).unknown(),
+  }).unknown();
 
   return schema;
 }

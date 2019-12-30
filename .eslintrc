@@ -16,6 +16,6 @@
     "no-restricted-globals": [2, "!self"],
     "max-len": [2, {"ignoreComments": true, "code": 100}],
     "no-param-reassign": [2, {"props": false}],
-    "no-unused-vars": [1, {"argsIgnorePattern": "res|next|^err"}]
+    "no-unused-vars": [1, {"argsIgnorePattern": "request|req|res|next|^err"}]
   }
 }

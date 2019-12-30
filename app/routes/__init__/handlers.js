@@ -28,7 +28,6 @@ export const developmentErrors = (err, req, res, next) => {
     message: err.message,
     status: err.status || 500,
     stackHighlighted: err.stack.replace(/[a-z_-\d]+.js:\d+:\d+/gi, '<mark>$&</mark>'),
-    details: err.details,
   };
   res.status(err.status || 500);
   res.format({

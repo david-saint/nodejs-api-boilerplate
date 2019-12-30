@@ -12,9 +12,9 @@ export default class Controller {
    * @return {Array|Object}
    */
   validate(request, validator = null) {
-    if (validator === null) return true;
+    if (validator === null) return null;
     // If an array of validators was passed, recursively run each of them.
-    if (Array.isArray(validator)) { return validator.map(v => this.validate(request, v)); }
+    if (Array.isArray(validator)) return validator.map(v => this.validate(request, v));
     // run the validate logic on the request.
     const { value, error } = validator.validate(request);
     // if there's an error throw it to exit out of the process...

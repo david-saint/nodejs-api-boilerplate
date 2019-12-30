@@ -1,5 +1,6 @@
 import models from '../models';
 import Controller from './__init__/Controller';
+import TodoResource from '../resources/TodoResource';
 import { create as createTodoValidator } from './validators/Todo';
 
 class TodoController extends Controller {
@@ -9,16 +10,13 @@ class TodoController extends Controller {
    * @param  {Response} res
    * @return {JSON}
    */
-  create(req, res) {
+  async create(req, res) {
     // validate the request
     this.validate(req, createTodoValidator());
     // then create a new todo
-    return models.Todo
-      .create({
-        title: req.body.title,
-      })
-      .then(todo => res.status(201).json(todo))
-      .catch(error => res.status(400).json(error));
+    const todo = await models.Todo.create({ title: req.body.title });
+    // return the resource, with a status of 201
+    return new TodoResource(todo, 201);
   }
 
   /**
@@ -27,12 +25,11 @@ class TodoController extends Controller {
    * @param  {Response} res
    * @return {JSON}
    */
-  index(req, res) {
-    // Return a collection.
-    return models.Todo
-      .findAll()
-      .then(todos => res.status(200).json(todos))
-      .catch(error => res.status(400).json(error));
+  async index(req, res) {
+    // get all the todos
+    const todos = await models.Todo.findAll();
+    // return a collection of todos.
+    return TodoResource.collection(todos);
   }
 }
 

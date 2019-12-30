@@ -10,7 +10,7 @@ function create() {
     body: JOI.object({
       title: JOI.string().max(255).required(),
     }),
-  });
+  }).unknown();
 
   return schema;
 }
