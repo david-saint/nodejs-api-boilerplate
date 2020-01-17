@@ -31,6 +31,24 @@ class TodoController extends Controller {
     // return a collection of todos.
     return TodoResource.collection(todos);
   }
+
+  /**
+   * The method that handles getting a single
+   * todo resource
+   * @param  {[type]} req [description]
+   * @param  {[type]} res [description]
+   * @return {[type]}     [description]
+   */
+  async show(req, res) {
+    // relationships to load with the todo
+    const include = this.includes(req);
+    // find the todo needed
+    const todo = await models.Todo.find(req.params.id, { include });
+    // return the resource
+    return new TodoResource(todo);
+  }
+  // update
+  // destroy
 }
 
 export default TodoController;

@@ -1,3 +1,5 @@
+import models from '../../models';
+
 export default class Controller {
   constructor() {
     if (this.constructor === Controller) {
@@ -33,5 +35,21 @@ export default class Controller {
   async validateAsync(request, validator = null) {
     // return the validation asynchronously.. I guess.
     return this.validate(request, validator);
+  }
+
+  /**
+   * returns an array of models, that the api
+   * consumer wants loaded with the response.
+   *
+   * @param  {Request} request.query
+   * @return {array}
+   */
+  includes({ query }) {
+    // get the with query from the request
+    const withRelations = query.with ? query.with.split(',') : undefined;
+    // filter the valid ones
+    return withRelations && withRelations
+      .filter(r => typeof models[r] !== 'undefined')
+      .map(r => models[r]);
   }
 }

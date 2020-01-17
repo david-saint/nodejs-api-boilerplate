@@ -14,4 +14,7 @@ router.get('/todos', resolve(TodoController, 'index'));
 // Route for creating a todo list
 router.post('/todos/create', resolve(TodoController, 'create'));
 
+// Route for getting a single todo
+router.get('/todos/:id', resolve(TodoController, 'show'));
+
 export default router;
