@@ -1,7 +1,6 @@
 import Resource from './__init__/Resource';
-import TodoItemResource from './TodoItemResource';
 
-class TodoResource extends Resource {
+class TodoItemResource extends Resource {
   /**
    * Define the format of all todos
    * @param  {Request} request
@@ -10,15 +9,12 @@ class TodoResource extends Resource {
   make(request) {
     return {
       id: this.resource.id,
-      title: this.resource.title,
+      content: this.resource.content,
+      complete: this.resource.complete,
       updated_at: this.resource.updatedAt,
       created_at: this.resource.createdAt,
-      todo_items: this.whenLoaded(
-        'todo_items',
-        () => TodoItemResource.collection(this.resource.todo_items),
-      ),
     };
   }
 }
 
-export default TodoResource;
+export default TodoItemResource;

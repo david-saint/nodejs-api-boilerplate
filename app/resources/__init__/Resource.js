@@ -68,7 +68,7 @@ export default class Resource {
     // if we think the relation is loaded, but it's actually null return null.
     if (this.resource[relationship] === null) return null;
 
-    return value;
+    return typeof value === 'function' ? value() : value;
   }
 
   /**
@@ -93,12 +93,15 @@ export default class Resource {
    * @param  {Request} request
    * @return {Object}
    */
-  resolve(request = null) {
-    let data = this.make(request || this._request);
+  resolve(request = this._request) {
+    // if the resource is empty return null
+    if (this._resource === null) return null;
+    // make the data
+    let data = this.make(request);
     // if the data from the make is a function call it.
     if (typeof data === 'function') { data = data(); }
 
-    return Resource.removeMissingValues(data);
+    return Resource.removeMissingValues(data, request);
   }
 
   /**
@@ -130,7 +133,7 @@ export default class Resource {
    * @param  {Object} data
    * @return {Obejct}
    */
-  static removeMissingValues(data) {
+  static removeMissingValues(data, request) {
     /* eslint-disable no-restricted-syntax */
     for (const [key, value] of Object.entries(data)) {
       /* eslint-enable no-restricted-syntax */
@@ -139,6 +142,9 @@ export default class Resource {
             && value.resource instanceof MissingValue
             && value.resource.isMissing())) {
         delete data[key];
+      }
+      if (value instanceof Resource) {
+        data[key] = value.resolve(request);
       }
     }
 
@@ -159,7 +165,6 @@ export class ResourceCollection extends Resource {
     super(resource, status);
 
     this.Collects = require(`../${collects}`).default; // eslint-disable-line
-    console.log(this.Collects);
     this._resource = this.collectResource(resource);
   }
 
@@ -182,7 +187,7 @@ export class ResourceCollection extends Resource {
    * @return {array}
    */
   make(request) {
-    return this._resource.map(r => r.make(request));
+    return this._resource.map(r => r.resolve(request));
   }
 
   /**
