@@ -1,4 +1,4 @@
-import { Model } from 'sequelize';
+import Model from './__init__/Model';
 
 export default class TodoItem extends Model {
   /**
