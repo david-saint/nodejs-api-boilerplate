@@ -13,10 +13,14 @@ class TodoResource extends Resource {
       title: this.resource.title,
       updated_at: this.resource.updatedAt,
       created_at: this.resource.createdAt,
-      todo_items: this.whenLoaded(
+      todo_items_count: this.whenLoaded(
         'todo_items',
-        () => TodoItemResource.collection(this.resource.todo_items),
+        () => this.resource.todo_items.length,
       ),
+      // todo_items: this.whenLoaded(
+      //   'todo_items',
+      //   () => TodoItemResource.collection(this.resource.todo_items),
+      // ),
     };
   }
 }
