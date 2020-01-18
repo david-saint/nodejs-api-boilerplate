@@ -26,8 +26,10 @@ class TodoController extends Controller {
    * @return {JSON}
    */
   async index(req, res) {
+    // relationships to load with the todo
+    const include = this.includes(req);
     // get all the todos
-    const todos = await models.Todo.findAll();
+    const todos = await models.Todo.paginate(req, { include });
     // return a collection of todos.
     return TodoResource.collection(todos);
   }

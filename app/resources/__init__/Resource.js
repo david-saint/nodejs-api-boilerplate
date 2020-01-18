@@ -1,4 +1,5 @@
 import MissingValue from './MissingValue';
+import Paginator from '../../models/__init__/Paginator';
 
 export default class Resource {
   /**
@@ -176,9 +177,14 @@ export class ResourceCollection extends Resource {
    */
   collectResource(resource) {
     if (resource instanceof MissingValue) return resource;
-    return this.Collects && !(resource[0] instanceof this.Collects)
+
+    const res = this.Collects && !(resource[0] instanceof this.Collects)
       ? resource.map(r => new this.Collects(r))
       : resource;
+
+    return resource instanceof Paginator
+      ? resource.setItems(res)
+      : res;
   }
 
   /**
@@ -196,7 +202,78 @@ export class ResourceCollection extends Resource {
    * @return {object}
    */
   toResponse(request) {
-    // TODO: implement pagination.
-    return super.toResponse(request);
+    // create response depending on
+    // if it's a paginator or not
+    return this._resource instanceof Paginator
+      ? this.toPaginatorResponse(request)
+      : super.toResponse(request);
+  }
+
+  /**
+   * Create an HTTP response that represents the object
+   *
+   * @param  {[type]} request [description]
+   * @return {[type]}         [description]
+   */
+  toPaginatorResponse(request) {
+    return {
+      status: this.responseStatus(),
+      [this.wrapper]: this.resolve(request),
+      ...this.paginationInformation(),
+    };
+  }
+
+  /**
+   * Add the pagination information to the
+   * response..
+   * @return {[type]} [description]
+   */
+  paginationInformation() {
+    // get the pagination response
+    const response = this._resource.toResponse();
+
+    return {
+      links: this.paginationLinks(response),
+      meta: this.meta(response),
+    };
+  }
+
+  /**
+   * Get the pagination links for the response
+   * @param  {[type]} pagination [description]
+   * @return {[type]}            [description]
+   */
+  paginationLinks(pagination) {
+    // return it formatted how you like.
+    return {
+      first: pagination.firstPageUrl || null,
+      last: pagination.lastPageUrl || null,
+      prev: pagination.prevPageUrl || null,
+      next: pagination.nextPageUrl || null,
+    };
+  }
+
+  /**
+   * Gather the meta data for the response.
+   * @param  {[type]} pagination [description]
+   * @return {[type]}            [description]
+   */
+  meta(pagination) {
+    // list of properties to be filtered out of
+    // the pagination object.
+    const notAllowed = [
+      'data',
+      'prevPageUrl',
+      'nextPageUrl',
+      'lastPageUrl',
+      'firstPageUrl',
+    ];
+    // return the filtered Object
+    return Object.keys(pagination)
+      .filter(k => !notAllowed.includes(k))
+      .reduce((o, k) => {
+        o[k] = pagination[k];
+        return o;
+      }, {});
   }
 }
